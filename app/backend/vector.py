@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 import numpy as np
+from .config import settings
+
+_shared_models = {}
 
 
 @dataclass
@@ -13,11 +16,14 @@ class VectorStore:
     """FAISS when installed, with a deterministic cosine fallback for development."""
     def __init__(self, model_name: str):
         self.model = None
-        try:
-            from sentence_transformers import SentenceTransformer
-            self.model = SentenceTransformer(model_name)
-        except Exception:
-            pass
+        if settings.local_embeddings:
+            try:
+                if model_name not in _shared_models:
+                    from sentence_transformers import SentenceTransformer
+                    _shared_models[model_name] = SentenceTransformer(model_name)
+                self.model = _shared_models[model_name]
+            except Exception:
+                pass
         self.items: list[tuple[str, str]] = []
         self.vectors = None
         self.index = None

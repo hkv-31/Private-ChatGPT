@@ -25,6 +25,7 @@ class Settings:
     openrouter_api_key: str = os.getenv("OPENROUTER_API_KEY", "")
     openrouter_model: str = os.getenv("OPENROUTER_MODEL", "openrouter/free")
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+    local_embeddings: bool = os.getenv("LOCAL_EMBEDDINGS", "true").lower() not in {"0", "false", "no"}
     vector_dir: Path = Path(os.getenv("VECTOR_DIR", "data/index"))
     max_chunk_chars: int = int(os.getenv("MAX_CHUNK_CHARS", "1200"))
     chunk_overlap: int = int(os.getenv("CHUNK_OVERLAP", "150"))
