@@ -1,0 +1,1 @@
+"""Private ChatGPT application package."""

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: private-chatgpt
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: openrouter/free
+      - key: DATABASE_PATH
+        value: data/chat.db
+      - key: VECTOR_DIR
+        value: data/index
+      - key: UPLOAD_DIR
+        value: data/uploads
+      - key: EMBEDDING_MODEL
+        value: all-MiniLM-L6-v2

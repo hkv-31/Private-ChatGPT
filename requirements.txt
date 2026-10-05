@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+python-multipart
+streamlit
+requests
+httpx
+numpy
+pypdf
+python-docx
+Pillow
+pytesseract
+sentence-transformers
+faiss-cpu
+pytest
