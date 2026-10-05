@@ -47,7 +47,7 @@ FastAPI application
     +--> OpenRouter free-model routing
 ```
 
-The FastAPI application serves both the API and the browser interface. The main interface is located in [`frontend/index.html`](./frontend/index.html). The older [`streamlit_app.py`](./streamlit_app.py) is retained as an optional prototype.
+The FastAPI application serves both the API and the browser interface. The main interface is located in [`frontend/index.html`](./frontend/index.html). 
 
 ## RAG pipeline
 
@@ -127,36 +127,6 @@ private-chatgpt/
 - An OpenRouter API key for generated answers
 - Optional: Tesseract OCR installed and available on `PATH`
 - Optional: Docker for containerized execution
-
-## Installation
-
-### Windows PowerShell
-
-```powershell
-cd "C:\Users\hetan\Videos\project-private-chatgpt"
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-Copy-Item .env.example .env
-```
-
-### macOS/Linux
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-```
-
-Edit `.env` and add your OpenRouter key:
-
-```env
-OPENROUTER_API_KEY=your_key_here
-OPENROUTER_MODEL=openrouter/free
-```
-
-Never commit `.env` or place the key in source code, screenshots, notebooks, or chat messages.
 
 ## Run locally
 
@@ -252,51 +222,6 @@ Then open `http://localhost:8000`.
 
 The Docker image uses the provider-supplied `PORT` value when deployed, and defaults to port `8000` locally.
 
-## Deployment
-
-### Render
-
-The repository includes [`render.yaml`](./render.yaml) for a Docker-based Render deployment.
-
-General deployment steps:
-
-1. Push the project to GitHub.
-2. Create a new Render Blueprint from the repository.
-3. Select the free web service configuration.
-4. Add `OPENROUTER_API_KEY` as a secret environment variable.
-5. Deploy the service.
-6. Open the URL provided by Render.
-
-Render is a better fit for the current architecture than a serverless-only platform because the complete FastAPI application can run from the Docker image.
-
-The free service is appropriate for a portfolio demonstration. It may sleep after inactivity and its filesystem is ephemeral. Local SQLite data, uploaded files, embeddings, and vector indexes may be lost after a restart or redeployment.
-
-### Vercel
-
-Vercel is not the recommended deployment target for the current version. It can host a small Python serverless function, but this application relies on:
-
-- Local SQLite persistence
-- Uploaded files
-- Local embedding-model files
-- FAISS or NumPy indexes
-- Potentially long document-processing and RAG requests
-
-Serverless filesystems are not durable storage, so a Vercel deployment would require separating the frontend from the backend and moving the database, uploads, and vector storage to external services. That would be a different architecture from the current local-first design.
-
-## Free-tier and privacy considerations
-
-This project is intentionally built around free and open-source components:
-
-- Local embeddings
-- Local SQLite
-- Local FAISS/NumPy retrieval
-- OpenRouter's free-model route
-- Docker-compatible hosting
-
-Free model availability, rate limits, provider quotas, hosting limits, and cold-start behavior can change. The `openrouter/free` route selects an available free model, but it does not guarantee unlimited access or a fixed model.
-
-The application does not implement authentication. Anyone who can access a publicly deployed instance may be able to create users and interact with its data. Do not use the current version for sensitive documents or production workloads.
-
 ## Future scope
 
 - Proper user authentication
@@ -311,7 +236,3 @@ The application does not implement authentication. Anyone who can access a publi
 - More comprehensive RAG evaluation
 - Production observability and alerting
 - Rate limiting and abuse prevention
-
-## License
-
-Add a project license before distributing the repository publicly.
