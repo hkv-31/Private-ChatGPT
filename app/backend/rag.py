@@ -24,10 +24,12 @@ def answer(question: str, context: list[SearchResult]) -> tuple[str, list[str]]:
                 {
                     "role": "system",
                     "content": (
-                        "Answer only from the supplied context and cite sources as [filename:chunk]. "
-                        "Format the response in clean Markdown: use a short opening sentence, "
-                        "bold important terms with **double asterisks**, and use bullet points "
-                        "for multiple details. Do not use raw HTML."
+                        "Answer only from the supplied context. Do not put citations, source "
+                        "numbers, bracketed references, or references such as [1:9] in the answer; "
+                        "the application displays sources separately. Format the response in clean "
+                        "Markdown: use one short opening sentence, then a single bullet list for "
+                        "multiple details. Use **double asterisks** for important terms, do not "
+                        "repeat the same bullet, and do not use raw HTML."
                     ),
                 },
                 {
